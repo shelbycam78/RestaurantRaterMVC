@@ -12,19 +12,17 @@ namespace RestaurantRaterMVC_Walkthru.Controllers
     public class RestaurantController : Controller
     {
         private RestaurantDbContext _db = new RestaurantDbContext();
-        // GET: Restaurant/Create
-
+        
+        // GET: Restaurant/Index
         public ActionResult Index()
         {
             return View(_db.Restaurants.ToList());
         }
-
         // GET: Restaurant/Create
         public ActionResult Create()
         {
             return View();
         }
-
         // POST: Restaurant/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -100,6 +98,23 @@ namespace RestaurantRaterMVC_Walkthru.Controllers
                 _db.Entry(restaurant).State = EntityState.Modified;
                 _db.SaveChanges();
                 return RedirectToAction("Index");
+            }
+
+            return View(restaurant);
+        }
+
+        // GET: Restaurant/Details/{id}
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Restaurant restaurant = _db.Restaurants.Find(id);
+
+            if (restaurant == null)
+            {
+                return HttpNotFound();
             }
 
             return View(restaurant);
