@@ -15,7 +15,7 @@ namespace RestaurantRaterMVC_Walkthru.Models
 
     }
 
-    public class RestaurnatDbContext : DbContext
+    public class RestaurantDbContext : DbContext
     {
         public DbSet<Restaurant> Restaurants { get; set; }
     }
